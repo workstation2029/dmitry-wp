@@ -1,0 +1,89 @@
+@import "utils/libs";
+@import "utils/vars";
+@import "utils/mixins";
+@import "utils/fonts";
+@import "utils/reset";
+
+html {
+    line-height: $mainLineHeight;
+    font-size: $mainFontSize;
+    color: $mainFontColor;
+    height: 100%;
+    box-sizing: border-box;
+
+    // media для адаптива с помощью rem()
+    @media screen and (max-width: $desktopWidth) {
+            font-size: 16px;
+    }
+    @media screen and (max-width: $tableWidth) {
+            font-size: 15px;
+    }
+    @media screen and (max-width: $phoneWidth) {
+            font-size: 14px;
+    }
+}
+
+h1, h2, h3, h4, h5, h6 { margin: 0; }
+
+*,
+*::after,
+*::before {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    min-height: 100vh;
+
+    font-family: $mainFont;
+    font-size: $mainFontSize;
+    font-weight: $mainFontWeight;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+// адаптивные padding для 4-х видов экранов
+.section {
+    position: relative;
+    padding: 40px 0;
+    @media screen and (max-width: $smDesktopWidth) {
+        padding: 36px 0;
+    }
+    @media screen and (max-width: $tableWidth) {
+        padding: 28px 0;
+    }
+    @media screen and (max-width: $phoneWidth) {
+        padding: 20px 0;
+    }
+}
+// адаптивный контэйнер
+.container {
+    width: 100%;
+    display: flex;
+    position: relative;
+    margin: 0 auto;
+    max-width: $desktopWidth;
+    @media screen and (max-width: $smDesktopWidth) {
+        max-width: tableWidth;
+    }
+    @media screen and (max-width: $tableWidth) {
+        max-width: phoneWidth;
+    }
+    @media screen and (max-width: $phoneWidth) {
+        max-width: smPhoneWidth;
+    }
+}
+
+// List
+ul, li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
