@@ -8,7 +8,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     devtool: 'cheap-eval-source-map',// карта сайта (почитать подробнее)
     devServer: { // параметры для webpack-dev-server
         overlay: {
-            warnings: true,
+            warnings: false,
             errors: true
         }, // отображение предупреждений
         contentBase: baseWebpackConfig.externals.paths.dist(), // папкп с ресурсом
@@ -20,7 +20,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     plugins: [
         new webpack.SourceMapDevToolPlugin({
             filename: '[file].map'
-        })// карта сайта, нужена только для dev mode(не использывать при сборке!!!)    ]
+        })// карта сайта, нужена только для dev mode и корректной работы devtool(не использывать при сборке!!!)
     ]
 })
 

@@ -4,10 +4,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const PATHS = {
-    public: (string = '') => path.resolve(__dirname, './public', string),
-    src: (string = '') => path.resolve(__dirname, './src', string),
-    dist: (string = '') => path.resolve(__dirname, './dist', string),
-    assets: 'assets/'
+    public:  (string = '') => path.resolve(__dirname, '../public', string),
+    src:     (string = '') => path.resolve(__dirname, '../src', string),
+    dist:    (string = '') => path.resolve(__dirname, '../dist', string),
+    resolve: (string = '') => path.resolve(__dirname, string),
+    assets:  (string = '') => path.join('assets/', string)
 }
 
 module.exports = {
@@ -15,7 +16,7 @@ module.exports = {
         paths: PATHS 
     },
     entry: {
-        main: PATHS.src() // точка входа
+        main: PATHS.src() // точка входа 
     },
     output: { // точка выхода
         filename: 'scripts/[name].js', // вместо [name] подставляется main из entry
@@ -34,16 +35,21 @@ module.exports = {
             },
             {
                 test: /\.js$/, // регулярное вырожение для файлов
-                use: {
-                    loader: 'babel-loader', // загрузчик
-                },
+                use: [
+                    {
+                        loader: 'babel-loader', // загрузчик
+                    },
+                    {
+                        loader: 'eslint-loader',
+                    }
+                ],
                 exclude: '/node_modules/' // исключить
             },
             {
                 test: /\.(scss|sass|css)$/,
                 use: [
-                    // 'style-loader',
-                    MiniCssExtractPlugin.loader,
+                    // 'style-loader', // для разработки (добовляет стили в <style>)
+                    MiniCssExtractPlugin.loader, // выносит стили в отдельный файл
                     {
                         loader: 'css-loader',
                         options: {
@@ -55,7 +61,8 @@ module.exports = {
                         options: {
                             sourceMap: true,
                             config: {
-                                path: 'postcss.config.js' // путь для конфига
+                                path: PATHS.resolve('postcss.config.js') // путь для конфига (надо указывать относительно корня)
+                                // использывание path избавит от неожиданных проблем с путями
                             }
                         }
                     },
@@ -71,7 +78,7 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'style/[name].css',
+            filename: 'style/[name].css', // адресс относительно output.path
         }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
@@ -81,7 +88,7 @@ module.exports = {
         new CopyWebpackPlugin([
             {
                 from: PATHS.src('image'), 
-                to: `image`
+                to: `image`// адресс относительно output.path
             },
             {
                 from: PATHS.src('static')
