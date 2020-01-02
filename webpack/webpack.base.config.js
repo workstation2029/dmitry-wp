@@ -87,11 +87,11 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             {
-                from: PATHS.src('image'), 
+                from: PATHS.public('image'), 
                 to: `image`// адресс относительно output.path
             },
             {
-                from: PATHS.src('static')
+                from: PATHS.public('static')
             }
         ])
     ]
