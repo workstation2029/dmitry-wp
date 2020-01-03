@@ -15,7 +15,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         port: 4000,
         compress: true,
         publicPath: '/',
-        hot: true // после того как добавил изчезла проблема с HtmlWebpackPlugin(это совпадение)
+        hot: true, // после того как добавил изчезла проблема с HtmlWebpackPlugin(это совпадение)
+        historyApiFallback: true // без него не работает BrowserRouter
     },
     plugins: [
         new webpack.SourceMapDevToolPlugin({
